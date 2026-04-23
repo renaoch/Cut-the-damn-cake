@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cut The Damn Cake — Handcrafted Desserts & Specialty Coffee, Guwahati</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/index.js" type="module"></script>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+
+<style>
+/* ===== TOKENS ===== */
+:root {
+  --espresso:   #1A0F0A;
+  --roast:      #2E1A0E;
+  --mahogany:   #4A2518;
+  --mocha:      #7C4A2D;
+  --caramel:    #C17F45;
+  --gold:       #D4A853;
+  --cream:      #F5EDD9;
+  --latte:      #EFE0C4;
+  --milk:       #FAF5EC;
+  --chalk:      #FEFBF5;
+  --sage:       #6B7C61;
+  --sage-l:     #96A98B;
+  --berry:      #8B3A52;
+  --muted:      rgba(26,15,10,0.5);
+  --border:     rgba(26,15,10,0.10);
+  --border-s:   rgba(26,15,10,0.18);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:'DM Sans',sans-serif;background:var(--chalk);color:var(--espresso);overflow-x:hidden;}
+
+/* grain */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9998;mix-blend-mode:multiply;
+}
+
+/* ===== NAV ===== */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:1.5rem 3.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all 0.45s cubic-bezier(0.16,1,0.3,1);
+}
+#navbar.scrolled{
+  background:rgba(250,245,236,0.96);
+  backdrop-filter:blur(20px);
+  padding:1rem 3.5rem;
+  border-bottom:1px solid var(--border);
+  box-shadow:0 2px 32px rgba(26,15,10,0.06);
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;
+  color:var(--espresso);text-decoration:none;
+  display:flex;flex-direction:column;line-height:1.15;
+  letter-spacing:-0.01em;
+}
+.nav-logo small{
+  font-family:'DM Sans',sans-serif;
+  font-size:0.5rem;letter-spacing:0.38em;
+  text-transform:uppercase;color:var(--caramel);
+  font-weight:400;
+}
+.nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none;}
+.nav-links a{
+  font-family:'DM Sans',sans-serif;
+  font-size:0.7rem;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  position:relative;transition:color 0.3s;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:1.5px;background:var(--caramel);
+  transition:width 0.3s ease;
+}
+.nav-links a:hover{color:var(--espresso);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-links a.active{color:var(--caramel);}
+.nav-cta{
+  font-family:'DM Sans',sans-serif;font-size:0.65rem;
+  font-weight:500;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--chalk);background:var(--espresso);
+  padding:0.7rem 1.5rem;text-decoration:none;
+  border-radius:2px;transition:all 0.3s;
+}
+.nav-cta:hover{background:var(--mocha);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--espresso);transition:all 0.3s;}
+
+.mobile-menu{
+  position:fixed;inset:0;background:var(--espresso);
+  z-index:999;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  transform:translateX(100%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-close{
+  position:absolute;top:2rem;right:2.5rem;
+  font-size:1rem;color:var(--cream);cursor:pointer;
+  background:none;border:none;font-family:'DM Sans',sans-serif;
+  letter-spacing:0.1em;text-transform:uppercase;font-size:0.65rem;font-weight:500;
+}
+.mobile-nav-link{
+  font-family:'Playfair Display',serif;font-size:clamp(2.5rem,8vw,4rem);
+  font-weight:400;color:var(--cream);text-decoration:none;
+  display:block;padding:0.3rem 0;transition:color 0.3s;
+}
+.mobile-nav-link:hover{color:var(--caramel);}
+
+/* ===== PAGES ===== */
+.page{display:none;}
+.page.active{display:block;}
+#pageTransition{
+  position:fixed;inset:0;background:var(--espresso);
+  z-index:9000;transform:translateY(-100%);
+  transition:transform 0.4s cubic-bezier(0.7,0,0.3,1);
+  pointer-events:none;
+}
+#pageTransition.entering{transform:translateY(0);}
+#pageTransition.leaving{transform:translateY(100%);}
+
+/* ============================
+   HERO — CUTTING ANIMATION
+   ============================ */
+.hero{
+  min-height:100vh;
+  background:var(--espresso);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:6rem 2rem 4rem;
+}
+
+/* Warm background glow */
+.hero-glow{
+  position:absolute;width:700px;height:700px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(193,127,69,0.18) 0%, transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-55%);
+  pointer-events:none;
+}
+.hero-glow-2{
+  position:absolute;width:400px;height:400px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(139,58,82,0.12) 0%, transparent 70%);
+  bottom:0;right:10%;
+  pointer-events:none;
+}
+
+/* Coffee texture lines */
+.hero-lines{
+  position:absolute;inset:0;
+  background-image:repeating-linear-gradient(
+    0deg,
+    transparent,transparent 60px,
+    rgba(255,255,255,0.012) 60px,rgba(255,255,255,0.012) 61px
+  );
+  pointer-events:none;
+}
+
+/* ---- ENTRY ANIMATION STAGES ---- */
+
+/* Stage 1: Tagline fades up */
+.hero-pretitle{
+  font-family:'DM Sans',sans-serif;
+  font-size:0.62rem;font-weight:500;
+  letter-spacing:0.42em;text-transform:uppercase;
+  color:var(--caramel);
+  margin-bottom:2.5rem;
+  display:flex;align-items:center;gap:1rem;
+  opacity:0;
+  animation: fadeSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+  position:relative;z-index:3;
+}
+.hero-pretitle::before,.hero-pretitle::after{
+  content:'';display:block;width:32px;height:1px;background:var(--caramel);opacity:0.6;
+}
+
+/* Stage 2: Cake slice reveals (SVG animation) */
+.cake-stage{
+  position:relative;z-index:4;
+  margin-bottom:2rem;
+  opacity:0;
+  animation: fadeIn 0.5s ease 0.5s forwards;
+}
+.cake-svg-wrap{
+  width:200px;height:170px;
+  position:relative;
+  overflow:visible;
+}
+
+/* Stage 3: Title — each word cuts in like a knife slice */
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3.2rem,7.5vw,7rem);
+  font-weight:900;
+  line-height:0.95;
+  letter-spacing:-0.03em;
+  color:var(--chalk);
+  text-align:center;
+  position:relative;z-index:3;
+  margin-bottom:1.5rem;
+  overflow:hidden;
+}
+
+/* Each word is a slice that cuts in from below */
+.title-word{
+  display:inline-block;
+  overflow:hidden;
+  vertical-align:top;
+  margin:0 0.08em;
+}
+.title-word-inner{
+  display:inline-block;
+  transform:translateY(110%);
+  /* Each word animates in with stagger */
+}
+.title-word:nth-child(1) .title-word-inner{ animation: sliceUp 0.65s cubic-bezier(0.16,1,0.3,1) 2.8s forwards; }
+.title-word:nth-child(2) .title-word-inner{ animation: sliceUp 0.65s cubic-bezier(0.16,1,0.3,1) 2.95s forwards; }
+.title-word:nth-child(3) .title-word-inner{ 
+  animation: sliceUp 0.65s cubic-bezier(0.16,1,0.3,1) 3.1s forwards;
+  color:var(--caramel);
+  font-style:italic;
+}
+.title-word:nth-child(4) .title-word-inner{ animation: sliceUp 0.65s cubic-bezier(0.16,1,0.3,1) 3.25s forwards; }
+
+/* The knife cut line that sweeps across before each word */
+.cut-line{
+  position:absolute;left:-5%;right:-5%;height:2px;
+  background:linear-gradient(90deg, transparent, var(--caramel), transparent);
+  opacity:0;
+  top:50%;
+  animation: cutSweep 1.4s ease 2.7s forwards;
+  z-index:5;pointer-events:none;
+}
+@keyframes cutSweep{
+  0%{opacity:0;left:-105%;right:105%;}
+  20%{opacity:1;}
+  50%{left:-5%;right:-5%;opacity:0.8;}
+  100%{left:105%;right:-105%;opacity:0;}
+}
+@keyframes sliceUp{
+  from{transform:translateY(110%);}
+  to{transform:translateY(0%);}
+}
+@keyframes fadeSlideUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(0.9);}
+  to{opacity:1;transform:scale(1);}
+}
+
+/* Subtitle + CTAs fade in after title is done */
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,2vw,1.3rem);
+  font-weight:300;font-style:italic;
+  color:rgba(245,237,217,0.65);
+  text-align:center;max-width:480px;
+  margin-bottom:2.5rem;
+  opacity:0;
+  animation:fadeSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 3.9s forwards;
+  position:relative;z-index:3;
+}
+
+.hero-ctas{
+  display:flex;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:center;
+  opacity:0;
+  animation:fadeSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 4.1s forwards;
+  position:relative;z-index:3;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:'DM Sans',sans-serif;font-size:0.68rem;
+  font-weight:500;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--espresso);background:var(--cream);
+  padding:0.95rem 2.2rem;text-decoration:none;border-radius:2px;
+  transition:all 0.3s cubic-bezier(0.16,1,0.3,1);cursor:pointer;border:none;
+}
+.btn-primary:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 10px 28px rgba(193,127,69,0.35);}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:'DM Sans',sans-serif;font-size:0.68rem;
+  font-weight:400;letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(245,237,217,0.75);background:transparent;
+  padding:0.95rem 2.2rem;text-decoration:none;border-radius:2px;
+  border:1px solid rgba(245,237,217,0.2);
+  transition:all 0.3s;cursor:pointer;
+}
+.btn-ghost:hover{border-color:var(--caramel);color:var(--cream);}
+
+.hero-stats{
+  margin-top:3.5rem;
+  display:flex;gap:3rem;justify-content:center;
+  border-top:1px solid rgba(245,237,217,0.1);
+  padding-top:2.5rem;
+  opacity:0;
+  animation:fadeSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 4.3s forwards;
+  position:relative;z-index:3;
+}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.2rem;font-weight:700;
+  color:var(--cream);line-height:1;
+}
+.stat-label{
+  font-family:'DM Sans',sans-serif;font-size:0.58rem;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(245,237,217,0.45);margin-top:0.3rem;
+}
+
+/* Scroll indicator */
+.scroll-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.4rem;
+  opacity:0;animation:fadeIn 1s ease 3s forwards;z-index:3;
+}
+.scroll-hint span{
+  font-family:'DM Sans',sans-serif;font-size:0.5rem;
+  letter-spacing:0.3em;text-transform:uppercase;color:rgba(245,237,217,0.3);
+}
+.scroll-dot{
+  width:1.5px;height:28px;background:rgba(245,237,217,0.15);
+  position:relative;overflow:hidden;border-radius:2px;
+}
+.scroll-dot::after{
+  content:'';position:absolute;top:-100%;
+  width:100%;height:100%;background:var(--caramel);
+  animation:scrollPulse 2s ease-in-out 3.5s infinite;
+}
+@keyframes scrollPulse{
+  0%{top:-100%;}50%{top:0%;}100%{top:100%;}
+}
+
+/* SVG Cake Animation */
+.cake-svg{width:200px;height:170px;overflow:visible;}
+
+/* Cake layers rise up one by one */
+.cake-layer-3{
+  transform-origin:90px 148px;
+  animation:cakeRise 0.55s cubic-bezier(0.16,1,0.3,1) 0.55s both;
+}
+.cake-layer-2{
+  transform-origin:90px 99px;
+  animation:cakeRise 0.55s cubic-bezier(0.16,1,0.3,1) 0.72s both;
+}
+.cake-layer-1{
+  transform-origin:90px 68px;
+  animation:cakeRise 0.55s cubic-bezier(0.16,1,0.3,1) 0.89s both;
+}
+@keyframes cakeRise{
+  from{opacity:0;transform:scaleY(0);}
+  to{opacity:1;transform:scaleY(1);}
+}
+
+/* Cut line draws down through the cake */
+.cake-cut-line{
+  stroke-dasharray:220;
+  stroke-dashoffset:220;
+  animation:drawCut 0.45s cubic-bezier(0.4,0,0.2,1) 1.55s forwards;
+}
+@keyframes drawCut{
+  to{stroke-dashoffset:0;}
+}
+
+/* Left half slides left and fades */
+.cake-half-left{
+  transform-origin:90px 100px;
+  animation:splitLeft 0.7s cubic-bezier(0.4,0,0.6,1) 2.05s both;
+}
+/* Right half slides right and fades */
+.cake-half-right{
+  transform-origin:90px 100px;
+  animation:splitRight 0.7s cubic-bezier(0.4,0,0.6,1) 2.05s both;
+}
+@keyframes splitLeft{
+  0%{transform:translateX(0);opacity:1;}
+  60%{opacity:1;}
+  100%{transform:translateX(-80px) rotate(-8deg);opacity:0;}
+}
+@keyframes splitRight{
+  0%{transform:translateX(0);opacity:1;}
+  60%{opacity:1;}
+  100%{transform:translateX(80px) rotate(8deg);opacity:0;}
+}
+
+/* Whole cake wrapper fades out after split */
+.cake-stage{
+  animation:fadeIn 0.5s ease 0.5s forwards, cakeFadeOut 0.2s ease 2.7s forwards !important;
+}
+@keyframes cakeFadeOut{
+  to{opacity:0;pointer-events:none;}
+}
+
+/* Candles flicker */
+.candle-flame{
+  transform-origin:50% 90%;
+  animation:flicker 0.9s ease-in-out infinite alternate;
+}
+.candle-flame:nth-child(2){animation-delay:0.3s;}
+.candle-flame:nth-child(3){animation-delay:0.6s;}
+@keyframes flicker{
+  from{transform:scale(1,1) rotate(-3deg);}
+  to{transform:scale(0.85,1.15) rotate(3deg);}
+}
+
+/* ===== MARQUEE ===== */
+.marquee-band{
+  background:var(--caramel);
+  padding:0.7rem 0;overflow:hidden;white-space:nowrap;
+}
+.marquee-track{display:inline-flex;animation:marquee 30s linear infinite;}
+.marquee-item{
+  font-family:'Cormorant Garamond',serif;
+  font-size:0.95rem;font-weight:400;font-style:italic;
+  letter-spacing:0.06em;color:var(--espresso);
+  padding:0 2rem;display:inline-flex;align-items:center;gap:1.5rem;
+}
+.marquee-sep{color:var(--espresso);opacity:0.5;font-style:normal;font-size:0.7rem;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ===== SECTION COMMONS ===== */
+.section-eyebrow{
+  font-family:'DM Sans',sans-serif;font-size:0.58rem;font-weight:500;
+  letter-spacing:0.42em;text-transform:uppercase;color:var(--caramel);
+  margin-bottom:0.8rem;display:flex;align-items:center;gap:0.8rem;
+}
+.section-eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--caramel);}
+.section-heading{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:700;line-height:1.05;color:var(--espresso);
+}
+.section-heading em{font-style:italic;color:var(--mocha);}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.75s cubic-bezier(0.16,1,0.3,1),transform 0.75s cubic-bezier(0.16,1,0.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+.reveal-delay-3{transition-delay:0.3s;}
+.reveal-delay-4{transition-delay:0.4s;}
+
+/* ===== ABOUT STRIP ===== */
+.about-strip{
+  padding:8rem 5rem;background:var(--milk);
+  display:grid;grid-template-columns:1fr 1.1fr;gap:6rem;align-items:center;
+}
+.about-body{
+  font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:300;
+  line-height:1.8;color:var(--muted);margin-bottom:1.2rem;
+}
+.about-chips{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.8rem;}
+.chip{
+  font-family:'DM Sans',sans-serif;font-size:0.62rem;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.4rem 0.9rem;border:1.5px solid var(--border-s);
+  border-radius:100px;color:var(--mocha);transition:all 0.3s;
+}
+.chip:hover{border-color:var(--caramel);color:var(--caramel);}
+
+/* About image grid — real photos */
+.about-photo-grid{
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;
+  gap:0.8rem;
+}
+.aphoto{
+  border-radius:10px;overflow:hidden;position:relative;
+  background:var(--latte);
+}
+.aphoto img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  display:block;
+}
+.aphoto:hover img{transform:scale(1.05);}
+.aphoto:nth-child(1){grid-row:span 2;min-height:400px;}
+.aphoto:nth-child(2){min-height:190px;}
+.aphoto:nth-child(3){min-height:190px;}
+.aphoto-label{
+  position:absolute;bottom:0.8rem;left:0.9rem;
+  font-family:'Cormorant Garamond',serif;font-size:0.88rem;font-style:italic;
+  color:var(--chalk);
+  background:rgba(26,15,10,0.45);backdrop-filter:blur(4px);
+  padding:0.2rem 0.6rem;border-radius:3px;
+}
+
+/* ===== MENU ===== */
+.menu-section{padding:7rem 5rem;background:var(--latte);}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;}
+.filter-row{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.filter-btn{
+  font-family:'DM Sans',sans-serif;font-size:0.62rem;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.45rem 1rem;border:1.5px solid var(--border-s);
+  border-radius:100px;background:transparent;color:var(--muted);
+  cursor:pointer;transition:all 0.25s;
+}
+.filter-btn:hover,.filter-btn.active{
+  background:var(--espresso);border-color:var(--espresso);color:var(--cream);
+}
+#menuGrid,#menuGrid2{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.1rem;
+}
+.menu-item{
+  background:var(--chalk);border-radius:10px;padding:1.4rem;
+  border:1px solid var(--border);
+  transition:all 0.3s cubic-bezier(0.16,1,0.3,1);
+  position:relative;overflow:hidden;
+}
+.menu-item::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--caramel),var(--gold));
+  transform:scaleX(0);transform-origin:left;transition:transform 0.3s;
+}
+.menu-item:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(26,15,10,0.08);}
+.menu-item:hover::after{transform:scaleX(1);}
+.menu-item-badge{
+  display:inline-flex;align-items:center;gap:0.3rem;
+  font-family:'DM Sans',sans-serif;font-size:0.56rem;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;
+  padding:0.22rem 0.6rem;border-radius:100px;margin-bottom:0.7rem;
+}
+.badge-egg{background:#FFF3E0;color:#A0522D;}
+.badge-veg{background:#E8F5E9;color:#388E3C;}
+.badge-both{background:#EDE7F6;color:#5E35B1;}
+.menu-item-name{
+  font-family:'Playfair Display',serif;font-size:1rem;font-weight:500;
+  color:var(--espresso);margin-bottom:0.35rem;line-height:1.25;
+}
+.menu-item-desc{
+  font-family:'DM Sans',sans-serif;font-size:0.73rem;font-weight:300;
+  color:var(--muted);line-height:1.6;margin-bottom:0.9rem;
+}
+.menu-item-price{
+  font-family:'Playfair Display',serif;font-size:0.92rem;font-weight:400;
+  color:var(--caramel);
+}
+
+/* ===== PHOTO FEATURE SECTIONS ===== */
+.feature-strip{
+  padding:0;background:var(--milk);
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:560px;
+}
+.feature-strip.flip{direction:rtl;}
+.feature-strip.flip>*{direction:ltr;}
+.feature-photo{overflow:hidden;position:relative;}
+.feature-photo img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;
+  transition:transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.feature-strip:hover .feature-photo img{transform:scale(1.04);}
+.feature-content{
+  padding:5rem 4rem;display:flex;flex-direction:column;
+  justify-content:center;gap:1.2rem;
+}
+.feature-list{list-style:none;margin-top:0.5rem;}
+.feature-list li{
+  display:flex;align-items:flex-start;gap:0.75rem;
+  font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:300;
+  color:var(--muted);padding:0.6rem 0;border-bottom:1px solid var(--border);
+}
+.feature-list li .ph{color:var(--caramel);margin-top:1px;flex-shrink:0;font-size:0.9rem;}
+
+/* ===== HOW IT WORKS ===== */
+.how-section{
+  padding:7rem 5rem;background:var(--roast);text-align:center;
+}
+.how-heading{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3rem);font-weight:700;
+  color:var(--cream);margin-bottom:0.6rem;
+}
+.how-heading em{font-style:italic;color:var(--caramel);}
+.how-sub{
+  font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:300;
+  color:rgba(245,237,217,0.45);margin-bottom:4rem;
+}
+.how-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;text-align:left;
+}
+.how-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);
+  border-radius:12px;padding:2.5rem;transition:all 0.3s;
+}
+.how-card:hover{background:rgba(255,255,255,0.07);transform:translateY(-4px);}
+.how-num{
+  font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;
+  color:rgba(193,127,69,0.2);line-height:1;margin-bottom:1rem;
+}
+.how-icon-wrap{
+  width:46px;height:46px;border-radius:10px;
+  background:rgba(193,127,69,0.12);border:1px solid rgba(193,127,69,0.2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1rem;color:var(--caramel);font-size:1.1rem;
+}
+.how-title{
+  font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:500;
+  color:var(--cream);margin-bottom:0.5rem;
+}
+.how-desc{
+  font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:300;
+  color:rgba(245,237,217,0.45);line-height:1.65;
+}
+
+/* ===== GALLERY STRIP ===== */
+.gallery-strip{
+  display:flex;height:320px;overflow:hidden;
+}
+.gallery-panel{
+  flex:1;overflow:hidden;position:relative;
+  transition:flex 0.5s cubic-bezier(0.16,1,0.3,1);
+  cursor:pointer;
+}
+.gallery-panel:hover{flex:1.8;}
+.gallery-panel img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);display:block;
+}
+.gallery-panel:hover img{transform:scale(1.05);}
+.gallery-panel-label{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(26,15,10,0.75));
+  padding:1.5rem 1rem 0.8rem;
+  font-family:'Cormorant Garamond',serif;font-size:0.85rem;
+  font-style:italic;color:var(--cream);
+  opacity:0;transition:opacity 0.4s;
+}
+.gallery-panel:hover .gallery-panel-label{opacity:1;}
+
+/* ===== TESTIMONIALS ===== */
+.testi-section{padding:7rem 5rem;background:var(--cream);}
+.testi-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.5rem;margin-top:3rem;
+}
+.testi-card{
+  background:var(--chalk);border-radius:12px;padding:2.2rem;
+  border:1px solid var(--border);transition:all 0.3s;position:relative;
+}
+.testi-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(26,15,10,0.07);}
+.testi-quote-icon{
+  color:var(--caramel);opacity:0.35;margin-bottom:0.8rem;
+  font-size:1.5rem;
+}
+.testi-text{
+  font-family:'Cormorant Garamond',serif;font-size:1rem;
+  font-style:italic;line-height:1.75;color:var(--mocha);margin-bottom:1.5rem;
+}
+.testi-author{display:flex;align-items:center;gap:0.8rem;}
+.testi-avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--latte);border:2px solid var(--border-s);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--mocha);font-size:1rem;flex-shrink:0;
+}
+.testi-name{
+  font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;color:var(--espresso);
+}
+.testi-role{font-family:'DM Sans',sans-serif;font-size:0.63rem;font-weight:300;color:var(--muted);}
+.testi-stars{color:var(--caramel);font-size:0.7rem;margin-top:2px;}
+
+/* ===== NEWSLETTER ===== */
+.nl-section{
+  padding:6rem 5rem;background:var(--mahogany);
+  position:relative;overflow:hidden;text-align:center;
+}
+.nl-section::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:350px;height:350px;border-radius:50%;
+  background:rgba(193,127,69,0.1);pointer-events:none;
+}
+.nl-tag{
+  font-family:'DM Sans',sans-serif;font-size:0.58rem;font-weight:500;
+  letter-spacing:0.38em;text-transform:uppercase;
+  color:rgba(245,237,217,0.55);margin-bottom:1rem;
+  display:block;position:relative;z-index:1;
+}
+.nl-title{
+  font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:700;line-height:1.1;color:var(--cream);
+  margin-bottom:0.7rem;position:relative;z-index:1;
+}
+.nl-sub{
+  font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:300;
+  color:rgba(245,237,217,0.6);margin-bottom:2.5rem;position:relative;z-index:1;
+}
+.nl-form{
+  display:flex;gap:0;max-width:420px;margin:0 auto;
+  position:relative;z-index:1;
+}
+.nl-input{
+  flex:1;padding:1rem 1.5rem;border:none;
+  border-radius:3px 0 0 3px;
+  font-family:'DM Sans',sans-serif;font-size:0.85rem;
+  background:rgba(255,255,255,0.1);color:var(--cream);
+  outline:none;
+}
+.nl-input::placeholder{color:rgba(245,237,217,0.4);}
+.nl-btn{
+  padding:1rem 1.8rem;background:var(--caramel);color:var(--espresso);
+  border:none;border-radius:0 3px 3px 0;
+  font-family:'DM Sans',sans-serif;font-size:0.65rem;font-weight:600;
+  letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;
+  transition:background 0.3s;
+}
+.nl-btn:hover{background:var(--gold);}
+
+/* ===== CONTACT BANNER ===== */
+.contact-banner{
+  padding:4.5rem 5rem;background:var(--latte);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
+  border-top:1px solid var(--border);
+}
+.contact-item{display:flex;align-items:flex-start;gap:1rem;}
+.contact-icon-wrap{
+  width:46px;height:46px;flex-shrink:0;
+  background:var(--chalk);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--caramel);font-size:1.1rem;
+  border:1px solid var(--border-s);
+}
+.contact-label{
+  font-family:'DM Sans',sans-serif;font-size:0.58rem;font-weight:500;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--caramel);margin-bottom:0.3rem;
+}
+.contact-value{
+  font-family:'Playfair Display',serif;font-size:0.98rem;font-weight:500;color:var(--espresso);
+}
+.contact-sub{
+  font-family:'DM Sans',sans-serif;font-size:0.7rem;font-weight:300;color:var(--muted);
+}
+
+/* ===== FOOTER ===== */
+footer{background:var(--espresso);padding:4.5rem 5rem 2.5rem;color:var(--cream);}
+.footer-top{
+  display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3rem;
+  padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.footer-brand{
+  font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;
+  color:var(--cream);margin-bottom:0.8rem;
+}
+.footer-brand small{
+  display:block;font-family:'DM Sans',sans-serif;
+  font-size:0.5rem;letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--caramel);margin-top:0.2rem;font-weight:400;
+}
+.footer-desc{
+  font-family:'DM Sans',sans-serif;font-size:0.76rem;font-weight:300;
+  line-height:1.75;color:rgba(245,237,217,0.38);margin-bottom:1.5rem;
+}
+.footer-social{display:flex;gap:0.6rem;}
+.social-btn{
+  width:34px;height:34px;border:1px solid rgba(255,255,255,0.12);
+  border-radius:6px;display:flex;align-items:center;justify-content:center;
+  color:rgba(245,237,217,0.45);text-decoration:none;font-size:0.9rem;
+  transition:all 0.3s;
+}
+.social-btn:hover{border-color:var(--caramel);color:var(--caramel);}
+.footer-col-title{
+  font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:500;
+  color:var(--cream);margin-bottom:1.2rem;
+}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:0.55rem;}
+.footer-links a{
+  font-family:'DM Sans',sans-serif;font-size:0.74rem;font-weight:300;
+  color:rgba(245,237,217,0.4);text-decoration:none;transition:color 0.3s;
+}
+.footer-links a:hover{color:var(--cream);}
+.footer-bottom{
+  padding-top:2rem;display:flex;justify-content:space-between;align-items:center;
+}
+.footer-copy{
+  font-family:'DM Sans',sans-serif;font-size:0.62rem;
+  color:rgba(245,237,217,0.25);
+}
+
+/* ===== SUBPAGES ===== */
+.page-hero-mini{
+  padding:10rem 5rem 5rem;
+  background:var(--espresso);
+  position:relative;overflow:hidden;
+}
+.page-hero-mini::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 70% 50%, rgba(193,127,69,0.15) 0%, transparent 60%);
+  pointer-events:none;
+}
+.page-hero-mini-tag{
+  font-family:'DM Sans',sans-serif;font-size:0.6rem;font-weight:500;
+  letter-spacing:0.38em;text-transform:uppercase;color:var(--caramel);
+  margin-bottom:1rem;position:relative;z-index:1;
+}
+.page-hero-mini-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.5rem,5.5vw,4.8rem);
+  font-weight:700;line-height:0.98;color:var(--cream);
+  position:relative;z-index:1;
+}
+.page-hero-mini-title em{font-style:italic;color:var(--caramel);}
+
+/* About page */
+.about-page{padding:5rem;background:var(--milk);}
+.about-story-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;
+  align-items:start;margin-bottom:5rem;
+}
+.about-values{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem;}
+.value-card{
+  background:var(--chalk);border-radius:12px;padding:2rem;border:1px solid var(--border);
+}
+.value-icon-wrap{
+  width:44px;height:44px;border-radius:10px;
+  background:rgba(193,127,69,0.1);border:1px solid rgba(193,127,69,0.2);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--caramel);font-size:1.1rem;margin-bottom:1rem;
+}
+.value-title{
+  font-family:'Playfair Display',serif;font-size:1rem;font-weight:500;
+  color:var(--espresso);margin-bottom:0.5rem;
+}
+.value-desc{
+  font-family:'DM Sans',sans-serif;font-size:0.76rem;font-weight:300;
+  color:var(--muted);line-height:1.65;
+}
+.about-feature-img{
+  border-radius:16px;overflow:hidden;height:400px;position:relative;
+}
+.about-feature-img img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* Booking */
+.booking-section{padding:3rem 5rem 6rem;background:var(--milk);}
+.booking-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:start;}
+.booking-form{
+  background:var(--chalk);border-radius:14px;padding:3rem;border:1px solid var(--border);
+}
+.form-title{
+  font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:500;
+  color:var(--espresso);margin-bottom:0.5rem;
+}
+.form-sub{
+  font-family:'DM Sans',sans-serif;font-size:0.76rem;font-weight:300;
+  color:var(--muted);margin-bottom:2rem;
+}
+.form-group{margin-bottom:1.15rem;}
+.form-label{
+  display:block;font-family:'DM Sans',sans-serif;font-size:0.62rem;font-weight:500;
+  letter-spacing:0.15em;text-transform:uppercase;color:var(--mocha);margin-bottom:0.5rem;
+}
+.form-control{
+  width:100%;padding:0.88rem 1rem;
+  border:1.5px solid var(--border-s);border-radius:6px;
+  font-family:'DM Sans',sans-serif;font-size:0.86rem;color:var(--espresso);
+  background:var(--milk);outline:none;transition:border-color 0.3s;
+}
+.form-control:focus{border-color:var(--caramel);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.event-types{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;}
+.event-type-btn{
+  font-family:'DM Sans',sans-serif;font-size:0.62rem;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;
+  padding:0.4rem 0.9rem;border:1.5px solid var(--border-s);
+  border-radius:100px;background:transparent;color:var(--muted);
+  cursor:pointer;transition:all 0.25s;
+}
+.event-type-btn.selected,.event-type-btn:hover{
+  background:var(--espresso);border-color:var(--espresso);color:var(--cream);
+}
+.btn-fill-dark{
+  display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
+  font-family:'DM Sans',sans-serif;font-size:0.68rem;font-weight:500;
+  letter-spacing:0.14em;text-transform:uppercase;color:var(--cream);
+  background:var(--espresso);padding:0.95rem 2rem;
+  text-decoration:none;border-radius:3px;border:none;
+  cursor:pointer;width:100%;margin-top:0.5rem;transition:background 0.3s;
+}
+.btn-fill-dark:hover{background:var(--mocha);}
+.booking-info{display:flex;flex-direction:column;gap:1.2rem;}
+.info-card{
+  background:var(--chalk);border-radius:12px;padding:2rem;border:1px solid var(--border);
+}
+.info-card-title{
+  font-family:'Playfair Display',serif;font-size:1rem;font-weight:500;
+  color:var(--espresso);margin-bottom:0.8rem;
+}
+.info-list{list-style:none;}
+.info-list li{
+  font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:300;
+  color:var(--muted);line-height:1.6;padding:0.32rem 0;
+  display:flex;gap:0.6rem;align-items:flex-start;
+}
+.info-list li .ph{color:var(--caramel);flex-shrink:0;margin-top:1px;}
+#formSuccess{
+  display:none;text-align:center;padding:3rem;
+  background:var(--chalk);border-radius:14px;border:1px solid var(--border);
+}
+#formSuccess.visible{display:block;}
+.success-icon{color:var(--caramel);font-size:2.5rem;margin-bottom:1rem;}
+.success-title{
+  font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:500;
+  color:var(--espresso);margin-bottom:0.5rem;
+}
+.success-sub{font-family:'DM Sans',sans-serif;font-size:0.86rem;color:var(--muted);}
+
+/* full-menu-section */
+.full-menu-section{padding:3rem 5rem 6rem;background:var(--milk);}
+.btn-outline-dark{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  font-family:'DM Sans',sans-serif;font-size:0.65rem;font-weight:500;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--espresso);background:transparent;
+  padding:0.85rem 1.8rem;text-decoration:none;border-radius:3px;
+  border:1.5px solid var(--border-s);cursor:pointer;
+  transition:all 0.3s;
+}
+.btn-outline-dark:hover{border-color:var(--caramel);color:var(--caramel);}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .about-strip,.feature-strip{grid-template-columns:1fr;}
+  .feature-strip.flip{direction:ltr;}
+  .feature-photo{min-height:300px;}
+  .how-grid{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .booking-grid,.about-story-grid{grid-template-columns:1fr;}
+  #navbar{padding:1.2rem 1.8rem;}
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .contact-banner{grid-template-columns:1fr;padding:3rem 2.5rem;}
+  .menu-section,.full-menu-section,.booking-section,.about-page,.how-section,.testi-section,.nl-section{padding:5rem 2.5rem;}
+  .about-strip{padding:5rem 2.5rem;}
+  .page-hero-mini{padding:8rem 2.5rem 4rem;}
+  footer{padding:4rem 2.5rem 2rem;}
+  .gallery-strip{height:220px;}
+  .section-header{flex-direction:column;align-items:flex-start;gap:1rem;}
+}
+@media(max-width:640px){
+  .footer-top{grid-template-columns:1fr;}
+  .about-values{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .testi-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:1.8rem;flex-wrap:wrap;}
+  .about-photo-grid{grid-template-columns:1fr;}
+  .aphoto:nth-child(1){min-height:250px;}
+  .gallery-strip{flex-direction:column;height:auto;}
+  .gallery-panel{min-height:180px;}
+}
+</style>
+</head>
+<body>
+
+<div id="pageTransition"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobileMenu()">Close ✕</button>
+  <a href="#" class="mobile-nav-link" onclick="navigate('home',event);toggleMobileMenu()">Home</a>
+  <a href="#" class="mobile-nav-link" onclick="navigate('about',event);toggleMobileMenu()">About</a>
+  <a href="#" class="mobile-nav-link" onclick="navigate('menu',event);toggleMobileMenu()">Menu</a>
+  <a href="#" class="mobile-nav-link" onclick="navigate('booking',event);toggleMobileMenu()">Order</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo" onclick="navigate('home',event)">
+    Cut The Damn Cake
+    <small>Guwahati · Est. 2020</small>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="active" data-page="home" onclick="navigate('home',event)">Home</a></li>
+    <li><a href="#" data-page="about" onclick="navigate('about',event)">About</a></li>
+    <li><a href="#" data-page="menu" onclick="navigate('menu',event)">Menu</a></li>
+    <li><a href="#" data-page="booking" onclick="navigate('booking',event)">Order</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="navigate('booking',event)">Place Order</a>
+  <button class="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ==================== HOME ==================== -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+    <div class="hero-lines"></div>
+
+    <div class="hero-pretitle">
+      Guwahati's Finest Handcrafted Bakery
+    </div>
+
+    <!-- Animated SVG Cake — splits in two after cut -->
+    <div class="cake-stage">
+      <div class="cake-svg-wrap">
+        <svg class="cake-svg" viewBox="0 0 180 165" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Left half: everything left of x=90 -->
+            <clipPath id="clipLeft">
+              <rect x="0" y="0" width="90" height="165"/>
+            </clipPath>
+            <!-- Right half: everything right of x=90 -->
+            <clipPath id="clipRight">
+              <rect x="90" y="0" width="90" height="165"/>
+            </clipPath>
+          </defs>
+
+          <!-- ── LEFT HALF ── -->
+          <g class="cake-half-left" clip-path="url(#clipLeft)">
+            <!-- Bottom layer -->
+            <g class="cake-layer-3">
+              <rect x="20" y="118" width="140" height="33" rx="5" fill="#C17F45"/>
+              <rect x="20" y="118" width="140" height="8" rx="2" fill="#D4A853"/>
+              <rect x="20" y="141" width="140" height="10" rx="5" fill="#A06030"/>
+            </g>
+            <!-- Middle layer -->
+            <g class="cake-layer-2">
+              <rect x="35" y="84" width="110" height="36" rx="5" fill="#8B3A52"/>
+              <rect x="35" y="84" width="110" height="7" rx="2" fill="#A54868"/>
+              <rect x="35" y="108" width="110" height="12" rx="5" fill="#6B2840"/>
+            </g>
+            <!-- Top layer -->
+            <g class="cake-layer-1">
+              <rect x="50" y="54" width="80" height="32" rx="5" fill="#C17F45"/>
+              <rect x="50" y="54" width="80" height="7" rx="2" fill="#D4A853"/>
+              <rect x="50" y="76" width="80" height="10" rx="5" fill="#A06030"/>
+              <!-- Frosting drips -->
+              <ellipse cx="60" cy="54" rx="4" ry="6" fill="#FAF5EC" opacity="0.9"/>
+              <ellipse cx="78" cy="54" rx="3.5" ry="5" fill="#FAF5EC" opacity="0.9"/>
+            </g>
+            <!-- Candles (left side) -->
+            <g class="cake-layer-1">
+              <rect x="63" y="36" width="5" height="20" rx="2" fill="#D4A853"/>
+              <rect x="80" y="32" width="5" height="24" rx="2" fill="#C17F45"/>
+            </g>
+            <!-- Flames -->
+            <g>
+              <ellipse class="candle-flame" cx="65.5" cy="33" rx="3" ry="5" fill="#FFD580" opacity="0.9"/>
+              <ellipse class="candle-flame" cx="82.5" cy="29" rx="3" ry="5.5" fill="#FFB347" opacity="0.9"/>
+            </g>
+            <!-- Inner cut face (cream fill visible after split) -->
+            <rect x="87" y="32" width="3" height="120" fill="#FAF5EC" opacity="0.7"/>
+          </g>
+
+          <!-- ── RIGHT HALF ── -->
+          <g class="cake-half-right" clip-path="url(#clipRight)">
+            <!-- Bottom layer -->
+            <g class="cake-layer-3">
+              <rect x="20" y="118" width="140" height="33" rx="5" fill="#C17F45"/>
+              <rect x="20" y="118" width="140" height="8" rx="2" fill="#D4A853"/>
+              <rect x="20" y="141" width="140" height="10" rx="5" fill="#A06030"/>
+            </g>
+            <!-- Middle layer -->
+            <g class="cake-layer-2">
+              <rect x="35" y="84" width="110" height="36" rx="5" fill="#8B3A52"/>
+              <rect x="35" y="84" width="110" height="7" rx="2" fill="#A54868"/>
+              <rect x="35" y="108" width="110" height="12" rx="5" fill="#6B2840"/>
+            </g>
+            <!-- Top layer -->
+            <g class="cake-layer-1">
+              <rect x="50" y="54" width="80" height="32" rx="5" fill="#C17F45"/>
+              <rect x="50" y="54" width="80" height="7" rx="2" fill="#D4A853"/>
+              <rect x="50" y="76" width="80" height="10" rx="5" fill="#A06030"/>
+              <!-- Frosting drips -->
+              <ellipse cx="95" cy="54" rx="4" ry="7" fill="#FAF5EC" opacity="0.9"/>
+              <ellipse cx="112" cy="54" rx="3.5" ry="5" fill="#FAF5EC" opacity="0.9"/>
+              <ellipse cx="125" cy="54" rx="4" ry="6" fill="#FAF5EC" opacity="0.9"/>
+            </g>
+            <!-- Candles (right side) -->
+            <g class="cake-layer-1">
+              <rect x="97" y="36" width="5" height="20" rx="2" fill="#8B3A52"/>
+              <rect x="113" y="36" width="5" height="20" rx="2" fill="#D4A853"/>
+            </g>
+            <!-- Flames -->
+            <g>
+              <ellipse class="candle-flame" cx="99.5" cy="33" rx="3" ry="5" fill="#FF8C69" opacity="0.9"/>
+              <ellipse class="candle-flame" cx="115.5" cy="33" rx="3" ry="5" fill="#FFD580" opacity="0.9"/>
+            </g>
+            <!-- Inner cut face -->
+            <rect x="90" y="32" width="3" height="120" fill="#FAF5EC" opacity="0.7"/>
+          </g>
+
+          <!-- Cut line draws down through centre -->
+          <line class="cake-cut-line" x1="90" y1="30" x2="90" y2="155" stroke="#FAF5EC" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.6"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Cut-in title -->
+    <h1 class="hero-title" style="position:relative;">
+      <div class="cut-line"></div>
+      <span class="title-word"><span class="title-word-inner">Cut</span></span>
+      <span class="title-word"><span class="title-word-inner">The</span></span>
+      <span class="title-word"><span class="title-word-inner">Damn</span></span>
+      <span class="title-word"><span class="title-word-inner">Cake</span></span>
+    </h1>
+
+    <p class="hero-sub">Handcrafted desserts & specialty coffee — baked with obsessive care in Guwahati.</p>
+
+    <div class="hero-ctas">
+      <a href="#" class="btn-primary" onclick="navigate('menu',event)">
+        <i class="ph-bold ph-fork-knife" style="font-size:0.9rem;"></i> Explore Menu
+      </a>
+      <a href="#" class="btn-ghost" onclick="navigate('booking',event)">
+        <i class="ph-bold ph-shopping-bag" style="font-size:0.9rem;"></i> Place Order
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div style="text-align:center;">
+        <div class="stat-num" data-count="246">0</div>
+        <div class="stat-label">Items on Menu</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="stat-num" data-count="50">0</div>
+        <div class="stat-label">Orders / Week</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="stat-num" data-count="7">0</div>
+        <div class="stat-label">Years Baking</div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-dot"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-band">
+    <div class="marquee-track">
+      <span class="marquee-item">Celebration Cakes <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Artisan Cheesecakes <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Fudgy Brownies <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">French Macarons <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Handcrafted Cupcakes <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Gifting Boxes <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Custom Orders <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Celebration Cakes <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Artisan Cheesecakes <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Fudgy Brownies <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">French Macarons <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Handcrafted Cupcakes <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Gifting Boxes <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Custom Orders <span class="marquee-sep">◆</span></span>
+    </div>
+  </div>
+
+  <!-- ABOUT STRIP -->
+  <section class="about-strip">
+    <div class="reveal">
+      <div class="section-eyebrow">Our Story</div>
+      <h2 class="section-heading" style="margin-bottom:1.5rem;">Baked with <em>intention</em>,<br>served with warmth</h2>
+      <p class="about-body">Cut The Damn Cake started as a small passion project — a desire to bring honest, handcrafted desserts to people who actually care about what they eat. No shortcuts. No compromise.</p>
+      <p class="about-body">Every recipe is tested obsessively. Every order is packed with care. Whether it's a birthday cake or a box of macarons for yourself — you deserve the best.</p>
+      <div class="about-chips">
+        <span class="chip">No Preservatives</span>
+        <span class="chip">Eggless Options</span>
+        <span class="chip">Custom Cakes</span>
+        <span class="chip">Pet-Safe Cakes</span>
+        <span class="chip">Gifting Boxes</span>
+      </div>
+    </div>
+    <div class="about-photo-grid reveal reveal-delay-2">
+      <div class="aphoto">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80" alt="Signature layer cake" loading="lazy">
+        <div class="aphoto-label">Signature Cakes</div>
+      </div>
+      <div class="aphoto">
+        <img src="https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?w=400&q=80" alt="Artisan coffee" loading="lazy">
+        <div class="aphoto-label">Specialty Coffee</div>
+      </div>
+      <div class="aphoto">
+        <img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=400&q=80" alt="Chocolate brownies" loading="lazy">
+        <div class="aphoto-label">Fudgy Brownies</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY STRIP -->
+  <div class="gallery-strip">
+    <div class="gallery-panel">
+      <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=600&q=80" alt="Macarons" loading="lazy">
+      <div class="gallery-panel-label">French Macarons</div>
+    </div>
+    <div class="gallery-panel">
+      <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80" alt="Cheesecake" loading="lazy">
+      <div class="gallery-panel-label">Baked Cheesecake</div>
+    </div>
+    <div class="gallery-panel">
+      <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=600&q=80" alt="Cupcakes" loading="lazy">
+      <div class="gallery-panel-label">Handcrafted Cupcakes</div>
+    </div>
+    <div class="gallery-panel">
+      <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&q=80" alt="Birthday cake" loading="lazy">
+      <div class="gallery-panel-label">Celebration Cakes</div>
+    </div>
+    <div class="gallery-panel">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Gift boxes" loading="lazy">
+      <div class="gallery-panel-label">Gifting Boxes</div>
+    </div>
+  </div>
+
+  <!-- MENU PREVIEW — tabbed, no endless scroll -->
+  <section class="menu-section">
+    <div class="section-header reveal">
+      <div>
+        <div class="section-eyebrow">Our Menu</div>
+        <h2 class="section-heading">Something for <em>every</em> craving</h2>
+      </div>
+      <a href="#" class="btn-outline-dark" onclick="navigate('menu',event)">
+        Full Menu <i class="ph-bold ph-arrow-right" style="font-size:0.8rem;"></i>
+      </a>
+    </div>
+
+    <!-- Category tabs -->
+    <div class="menu-tabs-wrap">
+      <div class="menu-tabs" id="menuTabs">
+        <button class="menu-tab active" data-cat="cakes" onclick="switchMenuTab('cakes',this)">
+          <i class="ph-bold ph-cake"></i> Cakes
+        </button>
+        <button class="menu-tab" data-cat="cheesecake" onclick="switchMenuTab('cheesecake',this)">
+          <i class="ph-bold ph-pie-chart"></i> Cheesecakes
+        </button>
+        <button class="menu-tab" data-cat="brownies" onclick="switchMenuTab('brownies',this)">
+          <i class="ph-bold ph-squares-four"></i> Brownies
+        </button>
+        <button class="menu-tab" data-cat="cupcakes" onclick="switchMenuTab('cupcakes',this)">
+          <i class="ph-bold ph-ice-cream"></i> Cupcakes
+        </button>
+        <button class="menu-tab" data-cat="macarons" onclick="switchMenuTab('macarons',this)">
+          <i class="ph-bold ph-circles-three"></i> Macarons
+        </button>
+        <button class="menu-tab" data-cat="muffins" onclick="switchMenuTab('muffins',this)">
+          <i class="ph-bold ph-coffee"></i> Muffins & More
+        </button>
+        <button class="menu-tab" data-cat="gifting" onclick="switchMenuTab('gifting',this)">
+          <i class="ph-bold ph-gift"></i> Gifting
+        </button>
+      </div>
+    </div>
+
+    <!-- Active category description -->
+    <div class="menu-cat-desc" id="menuCatDesc"></div>
+
+    <!-- Items grid — max 4 shown, expand to show all -->
+    <div id="menuGridHome" class="menu-home-grid"></div>
+
+    <!-- Expand / collapse -->
+    <div class="menu-expand-row" id="menuExpandRow">
+      <button class="menu-expand-btn" id="menuExpandBtn" onclick="toggleMenuExpand()">
+        <span id="menuExpandLabel">Show all items</span>
+        <i class="ph-bold ph-caret-down" id="menuExpandIcon"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- FEATURE 1: Cakes -->
+  <section class="feature-strip">
+    <div class="feature-photo reveal">
+      <img src="https://images.unsplash.com/photo-1557925923-cd4648e211a0?w=800&q=80" alt="Celebration cakes" loading="lazy">
+    </div>
+    <div class="feature-content reveal reveal-delay-2">
+      <div class="section-eyebrow">Celebration Cakes</div>
+      <h2 class="section-heading">Made for your<br><em>biggest moments</em></h2>
+      <p class="about-body">Each cake is baked fresh, assembled by hand, and delivered with love. Choose from our signature flavours or go fully custom.</p>
+      <ul class="feature-list">
+        <li><i class="ph-bold ph-check-circle ph"></i> Available in 650 gms & 1 kg sizes</li>
+        <li><i class="ph-bold ph-check-circle ph"></i> Eggless options on selected flavours</li>
+        <li><i class="ph-bold ph-check-circle ph"></i> Custom designs and messages</li>
+        <li><i class="ph-bold ph-check-circle ph"></i> Photo cakes & tier cakes on request</li>
+        <li><i class="ph-bold ph-check-circle ph"></i> 48-hour advance order preferred</li>
+      </ul>
+      <a href="#" class="btn-primary" style="align-self:flex-start;" onclick="navigate('booking',event)">
+        Order a Cake <i class="ph-bold ph-arrow-right" style="font-size:0.85rem;"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- FEATURE 2: Gifting -->
+  <section class="feature-strip flip" style="background:var(--latte);">
+    <div class="feature-photo reveal">
+      <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=80" alt="Gift boxes" loading="lazy">
+    </div>
+    <div class="feature-content reveal reveal-delay-2">
+      <div class="section-eyebrow">Gifting</div>
+      <h2 class="section-heading">The <em>sweetest</em><br>way to say it</h2>
+      <p class="about-body">From assorted brownie boxes to bonbon collections and macaron sets — our gifting range is beautifully packaged and unforgettable.</p>
+      <ul class="feature-list">
+        <li><i class="ph-bold ph-check-circle ph"></i> Brownie boxes — 4 or 6 pieces</li>
+        <li><i class="ph-bold ph-check-circle ph"></i> Truffle & Bonbon collections</li>
+        <li><i class="ph-bold ph-check-circle ph"></i> Assorted macaron boxes</li>
+        <li><i class="ph-bold ph-check-circle ph"></i> Pet-safe pup cakes</li>
+        <li><i class="ph-bold ph-check-circle ph"></i> Custom branded gifting available</li>
+      </ul>
+      <a href="#" class="btn-primary" style="align-self:flex-start;background:var(--sage);" onclick="navigate('menu',event)">
+        See Gifting Range <i class="ph-bold ph-arrow-right" style="font-size:0.85rem;"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="reveal">
+      <div class="section-eyebrow" style="color:rgba(245,237,217,0.45);justify-content:center;">
+        <span style="width:20px;height:1px;background:rgba(245,237,217,0.3);display:block;"></span>
+        The Process
+      </div>
+      <h2 class="how-heading">Getting your cake <em>is easy</em></h2>
+      <p class="how-sub">Three simple steps. No fuss. Pure sweetness.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card reveal">
+        <div class="how-num">01</div>
+        <div class="how-icon-wrap"><i class="ph-bold ph-magnifying-glass"></i></div>
+        <div class="how-title">Browse & Choose</div>
+        <div class="how-desc">Explore our full menu — from signature cakes to macarons and brownies. Filter by category to find exactly what you're craving.</div>
+      </div>
+      <div class="how-card reveal reveal-delay-2">
+        <div class="how-num">02</div>
+        <div class="how-icon-wrap"><i class="ph-bold ph-pencil-line"></i></div>
+        <div class="how-title">Place Your Order</div>
+        <div class="how-desc">Fill in our simple order form with your details, flavour preferences, and delivery or pickup date. 48 hours advance booking recommended.</div>
+      </div>
+      <div class="how-card reveal reveal-delay-3">
+        <div class="how-num">03</div>
+        <div class="how-icon-wrap"><i class="ph-bold ph-confetti"></i></div>
+        <div class="how-title">Celebrate!</div>
+        <div class="how-desc">Your fresh-baked order arrives perfectly packaged. All that's left is to enjoy every single bite — and maybe take a photo first.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testi-section">
+    <div class="reveal">
+      <div class="section-eyebrow">Reviews</div>
+      <h2 class="section-heading">What people are <em>saying</em></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <i class="ph-bold ph-quotes testi-quote-icon"></i>
+        <p class="testi-text">The chocolate ganache cake was everything. Moist, rich, perfectly frosted — and it arrived looking like a dream. Will absolutely order again.</p>
+        <div class="testi-author">
+          <div class="testi-avatar"><i class="ph-bold ph-user"></i></div>
+          <div>
+            <div class="testi-name">Priya Sharma</div>
+            <div class="testi-role">Regular Customer</div>
+            <div class="testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <i class="ph-bold ph-quotes testi-quote-icon"></i>
+        <p class="testi-text">Ordered the Biscoff cheesecake and the macaron box for my mum's birthday. She literally couldn't stop talking about it. The packaging was gorgeous too!</p>
+        <div class="testi-author">
+          <div class="testi-avatar"><i class="ph-bold ph-user"></i></div>
+          <div>
+            <div class="testi-name">Rahul Das</div>
+            <div class="testi-role">Birthday Customer</div>
+            <div class="testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <i class="ph-bold ph-quotes testi-quote-icon"></i>
+        <p class="testi-text">Finally, a bakery in Guwahati that takes quality seriously. The dark chocolate biscoff cupcakes are dangerously good. I've been coming back every week.</p>
+        <div class="testi-author">
+          <div class="testi-avatar"><i class="ph-bold ph-user"></i></div>
+          <div>
+            <div class="testi-name">Ananya Bora</div>
+            <div class="testi-role">Weekly Regular</div>
+            <div class="testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="nl-section">
+    <span class="nl-tag">Stay in the loop</span>
+    <h2 class="nl-title">Get 25% off your first order</h2>
+    <p class="nl-sub">Subscribe for exclusive deals, new arrivals, and seasonal specials — straight to your inbox.</p>
+    <div class="nl-form">
+      <input type="email" class="nl-input" placeholder="your@email.com">
+      <button class="nl-btn">Subscribe</button>
+    </div>
+  </section>
+
+  <!-- CONTACT BANNER -->
+  <div class="contact-banner">
+    <div class="contact-item reveal">
+      <div class="contact-icon-wrap"><i class="ph-bold ph-map-pin"></i></div>
+      <div>
+        <div class="contact-label">Find Us</div>
+        <div class="contact-value">Guwahati, Assam</div>
+        <div class="contact-sub">Delivery & Pickup Available</div>
+      </div>
+    </div>
+    <div class="contact-item reveal reveal-delay-2">
+      <div class="contact-icon-wrap"><i class="ph-bold ph-phone"></i></div>
+      <div>
+        <div class="contact-label">Call / WhatsApp</div>
+        <div class="contact-value">+91 XXXXX XXXXX</div>
+        <div class="contact-sub">Mon–Sat, 10am–7pm</div>
+      </div>
+    </div>
+    <div class="contact-item reveal reveal-delay-3">
+      <div class="contact-icon-wrap"><i class="ph-bold ph-instagram-logo"></i></div>
+      <div>
+        <div class="contact-label">Follow Along</div>
+        <div class="contact-value">@cutthedamncake</div>
+        <div class="contact-sub">Instagram · Facebook</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-home -->
+
+<!-- ==================== ABOUT PAGE ==================== -->
+<div class="page" id="page-about">
+  <div class="page-hero-mini">
+    <div class="page-hero-mini-tag">Our Story</div>
+    <h1 class="page-hero-mini-title">Baked in <em>Guwahati</em>,<br>made with heart</h1>
+  </div>
+  <div class="about-page">
+    <div class="about-story-grid">
+      <div class="reveal">
+        <h2 class="section-heading" style="margin-bottom:1.5rem;">Why we started cutting cakes</h2>
+        <p class="about-body">Cut The Damn Cake was born from a simple frustration — the lack of truly great, honest bakeries in Guwahati. We wanted a place where quality came first. Where every cake was made fresh. Where you didn't have to compromise.</p>
+        <p class="about-body">We started small — just a home kitchen, a few test batches, and an Instagram page. Word spread fast. The cakes did the talking. Today, we serve hundreds of happy customers every month, still with the same obsessive care for quality.</p>
+        <p class="about-body">We're not just a bakery. We're a little bit of joy, delivered to your door.</p>
+      </div>
+      <div class="about-feature-img reveal reveal-delay-2">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="Baker at work" loading="lazy">
+      </div>
+    </div>
+    <h2 class="section-heading reveal" style="text-align:center;margin-bottom:2rem;">What drives us</h2>
+    <div class="about-values">
+      <div class="value-card reveal">
+        <div class="value-icon-wrap"><i class="ph-bold ph-plant"></i></div>
+        <div class="value-title">Fresh Ingredients</div>
+        <div class="value-desc">We use no artificial preservatives. Every cake is baked to order, using the finest quality ingredients we can source.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-icon-wrap"><i class="ph-bold ph-heart"></i></div>
+        <div class="value-title">Made with Love</div>
+        <div class="value-desc">Every item is handcrafted. We don't do assembly lines — we do meticulous, patient baking the way it should be done.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-icon-wrap"><i class="ph-bold ph-arrows-clockwise"></i></div>
+        <div class="value-title">Always Improving</div>
+        <div class="value-desc">Our recipes are constantly evolving. Customer feedback shapes everything we do. The best cake is always the next one.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="value-icon-wrap"><i class="ph-bold ph-leaf"></i></div>
+        <div class="value-title">Inclusive Baking</div>
+        <div class="value-desc">Eggless options, gluten-free choices, pet-safe cakes — we believe everyone deserves a slice of something wonderful.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MENU PAGE ==================== -->
+<div class="page" id="page-menu">
+  <div class="page-hero-mini">
+    <div class="page-hero-mini-tag">Our Menu</div>
+    <h1 class="page-hero-mini-title">A menu full of <em>joy</em></h1>
+  </div>
+  <div class="full-menu-section">
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterMenu('all',this)">All Items</button>
+      <button class="filter-btn" onclick="filterMenu('cakes',this)">Cakes</button>
+      <button class="filter-btn" onclick="filterMenu('cheesecake',this)">Cheesecakes</button>
+      <button class="filter-btn" onclick="filterMenu('brownies',this)">Brownies</button>
+      <button class="filter-btn" onclick="filterMenu('cupcakes',this)">Cupcakes</button>
+      <button class="filter-btn" onclick="filterMenu('macarons',this)">Macarons</button>
+      <button class="filter-btn" onclick="filterMenu('muffins',this)">Muffins & More</button>
+      <button class="filter-btn" onclick="filterMenu('gifting',this)">Gifting</button>
+    </div>
+    <div id="menuGrid2"></div>
+  </div>
+</div>
+
+<!-- ==================== BOOKING PAGE ==================== -->
+<div class="page" id="page-booking">
+  <div class="page-hero-mini">
+    <div class="page-hero-mini-tag">Place an Order</div>
+    <h1 class="page-hero-mini-title">Let's bake something <em>special</em></h1>
+  </div>
+  <div class="booking-section">
+    <div class="booking-grid">
+      <div>
+        <div id="bookingFormWrap">
+          <div class="booking-form">
+            <div class="form-title">Order Details</div>
+            <div class="form-sub">Fill in the details below and we'll get back to you within 24 hours to confirm your order.</div>
+            <form onsubmit="submitBooking(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control" placeholder="Priya" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" placeholder="Sharma" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone / WhatsApp</label>
+                <input type="tel" class="form-control" placeholder="+91 98765 43210" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-control" placeholder="priya@email.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Occasion Type</label>
+                <div class="event-types">
+                  <button type="button" class="event-type-btn selected" onclick="selectEventType(this)">Birthday</button>
+                  <button type="button" class="event-type-btn" onclick="selectEventType(this)">Anniversary</button>
+                  <button type="button" class="event-type-btn" onclick="selectEventType(this)">Wedding</button>
+                  <button type="button" class="event-type-btn" onclick="selectEventType(this)">Corporate</button>
+                  <button type="button" class="event-type-btn" onclick="selectEventType(this)">Just Because</button>
+                  <button type="button" class="event-type-btn" onclick="selectEventType(this)">Other</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">What would you like?</label>
+                <textarea class="form-control" rows="3" placeholder="e.g. Chocolate Ganache cake, 1 kg, eggless, for Saturday pickup…"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Required Date</label>
+                  <input type="date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Delivery Preference</label>
+                  <select class="form-control">
+                    <option>Pickup</option>
+                    <option>Delivery (within Guwahati)</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn-fill-dark">Submit Order Request</button>
+            </form>
+          </div>
+        </div>
+        <div id="formSuccess">
+          <i class="ph-bold ph-check-circle success-icon"></i>
+          <div class="success-title">Order Request Received!</div>
+          <div class="success-sub">We'll WhatsApp you within 24 hours to confirm the details and payment. Thank you!</div>
+        </div>
+      </div>
+
+      <div class="booking-info">
+        <div class="info-card reveal">
+          <div class="info-card-title">Order Guidelines</div>
+          <ul class="info-list">
+            <li><i class="ph-bold ph-clock ph"></i> 48-hour advance notice required for cakes</li>
+            <li><i class="ph-bold ph-clock ph"></i> Custom cakes need 72 hours minimum</li>
+            <li><i class="ph-bold ph-credit-card ph"></i> Full payment required on confirmation</li>
+            <li><i class="ph-bold ph-map-pin ph"></i> Delivery available within Guwahati</li>
+            <li><i class="ph-bold ph-whatsapp-logo ph"></i> WhatsApp us for urgent orders</li>
+          </ul>
+        </div>
+        <div class="info-card reveal reveal-delay-2">
+          <div class="info-card-title">Popular Picks This Week</div>
+          <ul class="info-list">
+            <li><i class="ph-bold ph-star ph"></i> Dark Chocolate Biscoff Cake</li>
+            <li><i class="ph-bold ph-star ph"></i> Biscoff Cheesecake</li>
+            <li><i class="ph-bold ph-star ph"></i> Assorted Macaron Box</li>
+            <li><i class="ph-bold ph-star ph"></i> Brownie Gift Box (6 pcs)</li>
+            <li><i class="ph-bold ph-star ph"></i> Red Velvet Cupcakes</li>
+          </ul>
+        </div>
+        <div class="info-card reveal reveal-delay-3" style="background:var(--mahogany);border-color:var(--mahogany);">
+          <div class="info-card-title" style="color:var(--cream);">Need Help?</div>
+          <ul class="info-list">
+            <li style="color:rgba(245,237,217,0.7);"><i class="ph-bold ph-whatsapp-logo" style="color:var(--caramel);flex-shrink:0;"></i> WhatsApp us for quick queries</li>
+            <li style="color:rgba(245,237,217,0.7);"><i class="ph-bold ph-instagram-logo" style="color:var(--caramel);flex-shrink:0;"></i> DM on Instagram for design inspiration</li>
+            <li style="color:rgba(245,237,217,0.7);"><i class="ph-bold ph-chat-circle ph" style="color:var(--caramel);flex-shrink:0;"></i> We love discussing custom ideas!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">
+        Cut The Damn Cake
+        <small>Guwahati · Est. 2020</small>
+      </div>
+      <p class="footer-desc">Handcrafted desserts and specialty coffee, made with obsessive care in Guwahati. Every order is a little act of love.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn" title="Instagram"><i class="ph-bold ph-instagram-logo"></i></a>
+        <a href="#" class="social-btn" title="Facebook"><i class="ph-bold ph-facebook-logo"></i></a>
+        <a href="#" class="social-btn" title="WhatsApp"><i class="ph-bold ph-whatsapp-logo"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="navigate('home',event)">Home</a></li>
+        <li><a href="#" onclick="navigate('about',event)">About Us</a></li>
+        <li><a href="#" onclick="navigate('menu',event)">Our Menu</a></li>
+        <li><a href="#" onclick="navigate('booking',event)">Place Order</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Menu</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="navigate('menu',event)">Cakes</a></li>
+        <li><a href="#" onclick="navigate('menu',event)">Cheesecakes</a></li>
+        <li><a href="#" onclick="navigate('menu',event)">Brownies</a></li>
+        <li><a href="#" onclick="navigate('menu',event)">Macarons</a></li>
+        <li><a href="#" onclick="navigate('menu',event)">Gifting</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="#">Guwahati, Assam</a></li>
+        <li><a href="#">WhatsApp Us</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Cut The Damn Cake. Made with care in Guwahati.</div>
+    <div class="footer-copy">All rights reserved</div>
+  </div>
+</footer>
+
+<script>
+/* ===== MENU DATA ===== */
+const menuData = [
+  { cat:'cakes', name:'Chocolate Ganache', desc:'Decadent chocolate cake with chocolate ganache filling & frosting', price:'₹900 / 650 GMS · ₹1,650 / 1 KG', badge:'egg' },
+  { cat:'cakes', name:'Caramel Butterscotch', desc:'Moist vanilla cake, caramel, butterscotch nibs and butterscotch frosting', price:'₹900 / 650 GMS · ₹1,650 / 1 KG', badge:'both' },
+  { cat:'cakes', name:'Dark Chocolate Decadence', desc:'Rich chocolate cake with 46.5% dark chocolate ganache filling & frosting', price:'₹1,150 / 650 GMS · ₹1,900 / 1 KG', badge:'egg' },
+  { cat:'cakes', name:'Dark Chocolate Biscoff', desc:'Rich chocolate with 46.5% dark chocolate ganache balanced with biscoff spread', price:'₹1,300 / 650 GMS · ₹2,000 / 1 KG', badge:'egg' },
+  { cat:'cakes', name:'Red Velvet', desc:'Mild chocolate base and rich cream cheese frosting', price:'₹1,300 / 650 GMS', badge:'egg' },
+  { cat:'cakes', name:'Nutella Chocolate', desc:'Chocolate cake layered with hazelnut spread, roasted hazelnuts & chocolate ganache', price:'₹1,000 / 650 GMS · ₹1,850 / 1 KG', badge:'egg' },
+  { cat:'cakes', name:'Vanilla Biscoff Cake', desc:'Moist vanilla sponge with cream cheese frosting, biscoff drizzles and crumbs', price:'₹1,300 / 650 GMS · ₹2,000 / 1 KG', badge:'both' },
+  { cat:'cakes', name:'Reine de Saba', desc:"Julia Child's almond rum cake covered in dark chocolate buttercream frosting", price:'₹1,950 / 850 GMS', badge:'egg' },
+  { cat:'cakes', name:'Dark Choc Raspberry Mousse', desc:'Chocolate cake with raspberry filling, light chocolate mousse and 46.5% dark chocolate ganache', price:'₹2,300 / 1 KG', badge:'egg' },
+  { cat:'cakes', name:'Gluten Free Cake', desc:'Made with almond & oats flour, frosted with chocolate buttercream or ganache', price:'₹2,250 / 1 KG', badge:'egg' },
+  { cat:'cheesecake', name:'Biscoff Cheesecake', desc:'Baked biscoff cheesecake — a café classic', price:'₹550 / 400 GMS · ₹1,750 / 650 GMS', badge:'egg' },
+  { cat:'cheesecake', name:'Blueberry Cheesecake', desc:'Baked blueberry cheesecake with a bright fruity finish', price:'₹550 / 400 GMS · ₹1,700 / 650 GMS', badge:'egg' },
+  { cat:'cheesecake', name:'New York Cheesecake', desc:'Classic baked New York style cheesecake', price:'₹1,600 / 650 GMS · ₹3,200 / 1.3 KG', badge:'egg' },
+  { cat:'cheesecake', name:'Biscoff Chilled Cheesecake', desc:'No-bake chilled biscoff cheesecake — smooth and indulgent', price:'₹1,800 / 650 GMS · ₹3,600 / 1.3 KG', badge:'egg' },
+  { cat:'cheesecake', name:'Blueberry Chilled Cheesecake', desc:'No-bake chilled blueberry cheesecake', price:'₹500 / 225 GMS · ₹1,100 / 650 GMS', badge:'egg' },
+  { cat:'cheesecake', name:'Baileys Chilled Cheesecake', desc:'Indulgent chilled cheesecake with Baileys notes', price:'₹1,650 / 650 GMS', badge:'egg' },
+  { cat:'brownies', name:'Biscoff Brownie', desc:'Fudgy brownie with biscoff', price:'₹170', badge:'egg' },
+  { cat:'brownies', name:'Nutella Brownie', desc:'Rich brownie swirled with Nutella', price:'₹160', badge:'egg' },
+  { cat:'brownies', name:'Fudgy Coffee Brownie', desc:'Deep coffee-flavoured fudgy brownie', price:'₹110', badge:'egg' },
+  { cat:'brownies', name:'Chocolate Overload Brownie', desc:'Maximum chocolate, maximum indulgence', price:'₹100', badge:'egg' },
+  { cat:'brownies', name:'Caramelo Brownie', desc:'Caramel-laced fudgy brownie', price:'₹130', badge:'egg' },
+  { cat:'brownies', name:'Eggless Brownie', desc:'Eggless fudgy brownie option', price:'₹110', badge:'veg' },
+  { cat:'brownies', name:'Assorted Brownie Box (4)', desc:'Fudgy coffee, chocolate overload, nutella, chocolate overload with ganache', price:'₹500', badge:'egg' },
+  { cat:'cupcakes', name:'Dark Chocolate Biscoff', desc:'Decadent dark chocolate with biscoff', price:'₹170', badge:'egg' },
+  { cat:'cupcakes', name:'Red Velvet', desc:'Classic red velvet with cream cheese frosting', price:'₹170', badge:'egg' },
+  { cat:'cupcakes', name:'Carrot Cupcake', desc:'With cream cheese frosting', price:'₹160', badge:'egg' },
+  { cat:'cupcakes', name:'Dark Chocolate Decadence', desc:'Rich 46.5% dark chocolate', price:'₹160', badge:'egg' },
+  { cat:'cupcakes', name:'Nutella Chocolate', desc:'Chocolate with Nutella frosting', price:'₹160', badge:'egg' },
+  { cat:'cupcakes', name:'Vanilla Biscoff', desc:'Vanilla with biscoff cream', price:'₹170', badge:'egg' },
+  { cat:'cupcakes', name:'Vanilla Buttercream', desc:'Classic vanilla with buttercream', price:'₹130', badge:'both' },
+  { cat:'cupcakes', name:'Chocolate Ganache', desc:'Chocolate with ganache frosting', price:'₹130', badge:'egg' },
+  { cat:'macarons', name:'Assorted Macarons (Box of 6)', desc:'Bounty, Nutella, Pistachio, Blueberry Lemon, Coffee Ganache, Dark Chocolate, Passionfruit Lemon Curd, Salted Caramel', price:'₹520', badge:'egg' },
+  { cat:'macarons', name:'Mini Macarons (Box of 6)', desc:'Assorted mini macarons — same great flavours', price:'₹375', badge:'egg' },
+  { cat:'macarons', name:'Mini Macarons (Box of 12)', desc:'More to share — or not', price:'₹750', badge:'egg' },
+  { cat:'muffins', name:'Choco Chunk Muffin', desc:'Loaded with chocolate chunks', price:'₹85', badge:'egg' },
+  { cat:'muffins', name:'Vanilla Blueberry Muffin', desc:'Classic vanilla base with fresh blueberry', price:'₹90', badge:'egg' },
+  { cat:'muffins', name:'Dark Chocolate Chunk Muffin', desc:'Deep dark chocolate muffin', price:'₹95', badge:'egg' },
+  { cat:'muffins', name:'Churros — Classic', desc:'With Biscoff & Ganache Dip or Nutella & Ganache Dip', price:'₹260', badge:'egg' },
+  { cat:'muffins', name:'Donuts — Assorted Box of 4', desc:'Biscoff, Nutella, Caramel Crunch, Cinnamon Sugar, Dark Chocolate, Exotic Berry', price:'₹500', badge:'egg' },
+  { cat:'muffins', name:'Tiramisu Tub Cake', desc:'Classic Italian tiramisu in a convenient tub format', price:'₹500', badge:'egg' },
+  { cat:'muffins', name:'Biscoff Speculos Tub Cake', desc:'Biscoff-based tub cake', price:'₹520', badge:'egg' },
+  { cat:'muffins', name:'Blissful Chocolate Jar Cake', desc:'Layered chocolate jar cake', price:'₹240', badge:'egg' },
+  { cat:'gifting', name:'Assorted Brownie Box (6)', desc:'Chocolate, coffee, nutella, biscoff, chocolate overload with ganache, fudgy coffee with ganache', price:'₹750', badge:'egg' },
+  { cat:'gifting', name:'Assorted Truffle Box (6)', desc:'Handcrafted truffles in assorted flavours', price:'₹375', badge:'egg' },
+  { cat:'gifting', name:'Bonbon Box (6)', desc:'Caramel, Nutella, Dark Chocolate', price:'₹375', badge:'egg' },
+  { cat:'gifting', name:'Assorted Macaron Box', desc:'Premium assorted macarons', price:'₹520', badge:'egg' },
+  { cat:'gifting', name:'Pup Mini Cake', desc:'For your furry celebrations — dog-safe cake', price:'₹550 / 350 GMS', badge:'veg' },
+  { cat:'gifting', name:'Pup Cake', desc:'Larger celebration cake for your dog', price:'₹900 / 650 GMS', badge:'veg' },
+];
+
+function buildMenuHTML(items) {
+  const badgeLabel = { egg:'Contains Eggs', veg:'Eggless', both:'Both Options' };
+  const badgeClass = { egg:'badge-egg', veg:'badge-veg', both:'badge-both' };
+  return items.map(item => `
+    <div class="menu-item">
+      <div class="menu-item-badge ${badgeClass[item.badge]}">${badgeLabel[item.badge]}</div>
+      <div class="menu-item-name">${item.name}</div>
+      <div class="menu-item-desc">${item.desc}</div>
+      <div class="menu-item-price">${item.price}</div>
+    </div>
+  `).join('');
+}
+
+function renderMenu(filter, gridId) {
+  const grid = document.getElementById(gridId || 'menuGrid');
+  if (!grid) return;
+  const items = filter === 'all' ? menuData : menuData.filter(i => i.cat === filter);
+  grid.innerHTML = buildMenuHTML(items);
+}
+
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const activePage = document.querySelector('.page.active');
+  const gridId = activePage && activePage.id === 'page-menu' ? 'menuGrid2' : 'menuGrid';
+  renderMenu(cat, gridId);
+}
+
+renderMenu('all', 'menuGrid');
+renderMenu('all', 'menuGrid2');
+
+/* ===== NAVIGATION ===== */
+function navigate(page, e) {
+  if (e) e.preventDefault();
+  const transition = document.getElementById('pageTransition');
+  transition.classList.remove('leaving');
+  transition.classList.add('entering');
+  setTimeout(() => {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    window.scrollTo(0, 0);
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.classList.toggle('active', a.dataset.page === page);
+    });
+    transition.classList.remove('entering');
+    transition.classList.add('leaving');
+    setTimeout(() => { transition.classList.remove('leaving'); initScrollReveal(); }, 400);
+  }, 350);
+}
+
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+function selectEventType(btn) {
+  document.querySelectorAll('.event-type-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function submitBooking(e) {
+  e.preventDefault();
+  document.getElementById('bookingFormWrap').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('visible');
+}
+
+function initScrollReveal() {
+  const reveals = document.querySelectorAll('.page.active .reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+}
+initScrollReveal();
+
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+function initCounters() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseInt(el.dataset.count);
+          const start = Date.now(); const dur = 1400;
+          const tick = () => {
+            const p = Math.min((Date.now() - start) / dur, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.floor(ease * target);
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          tick();
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(el);
+  });
+}
+initCounters();
+</script>
+</body>
+</html>
